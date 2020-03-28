@@ -2,11 +2,9 @@ import java.lang.IllegalArgumentException
 
 object Series {
 
-    fun slices(n: Int, s: String): List<List<Int>> {
-        if (n < 1 || s.isEmpty() || n > s.length) throw IllegalArgumentException("Invalid Argument")
-        val sliced = s.split("").filterNot { it.isEmpty() }.map { it.toInt() } .toList()
-        return (sliced.indices)
-                .map { if (it + n <= sliced.size) sliced.subList(it, it + n) else emptyList() }
-                .filterNot { it.isEmpty() }
+    fun slices(length: Int, digits: String): List<List<Int>> {
+        require(length <= digits.length && length > 0 && digits.isNotEmpty()) {
+            throw IllegalArgumentException("Invalid Argument") }
+        return digits.map { it.toString().toInt() }.windowed(length)
     }
 }
